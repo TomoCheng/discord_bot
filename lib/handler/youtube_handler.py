@@ -4,6 +4,7 @@ import requests
 from lib.utils.logger import log
 from youtube_search import YoutubeSearch
 from dotenv import load_dotenv
+from urllib.parse import parse_qs, urlparse
 
 load_dotenv()
 
@@ -76,3 +77,86 @@ class YoutubeHandler:
             return json.loads(request.text)
         else:
             return None
+
+    def get_video_title(self, video_id):
+        """Get video title from Youtube.
+
+        Args:
+            `video_id`: Video ID.
+
+        Returns:
+            Video title.
+        """
+        video_info = self.get_video_info(video_id)
+        if video_info is not None and len(video_info["items"]) > 0:
+            return video_info["items"][0]["snippet"]["title"]
+        else:
+            return None
+
+    def get_playlist_ids(self, playlist_id=None, page_token=None, items=[]):
+        if page_token:
+            url = (
+                "https://www.googleapis.com/youtube/v3/playlistItems?"
+                "part=contentDetails&maxResults=200&"
+                "playlistId={}&pageToken={}&key={}".format(
+                    playlist_id, page_token, self.token
+                )
+            )
+        else:
+            url = (
+                "https://www.googleapis.com/youtube/v3/playlistItems?"
+                "part=contentDetails&maxResults=200&"
+                "playlistId={}&key={}".format(playlist_id, self.token)
+            )
+
+        res = requests.get(url)
+
+        if res.status_code == 200:
+            res_json = res.json()
+            i = [
+                item["contentDetails"]["videoId"] for item in res_json["items"]
+            ]
+            items.extend(i)
+
+            if "nextPageToken" in res_json:
+                self.get_playlist_ids(
+                    playlist_id, res_json["nextPageToken"], items
+                )
+            else:
+                return items
+
+        return {"ids": items}
+
+
+def get_video_id(url):
+    """Get video ID from YouTube URL.
+
+    Args:
+        `url`: YouTube URL.
+
+    Returns:
+        Video ID.
+    """
+    parsed_url = urlparse(url)
+    video_id = parse_qs(parsed_url.query).get("v")
+    if video_id:
+        return video_id[0]
+    else:
+        return None
+
+
+def get_playlist_id(url):
+    """Get playlist ID from YouTube URL.
+
+    Args:
+        `url`: YouTube URL.
+
+    Returns:
+        Playlist ID.
+    """
+    parsed_url = urlparse(url)
+    playlist_id = parse_qs(parsed_url.query).get("list")
+    if playlist_id:
+        return playlist_id[0]
+    else:
+        return None
