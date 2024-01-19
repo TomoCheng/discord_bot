@@ -72,7 +72,6 @@ class YoutubeHandler:
 
         params = f"part={part}&id={video_id}"
         request = self.combine_url_and_get("videos", params)
-        ##print(request.text)
         if request is not None:
             return json.loads(request.text)
         else:
