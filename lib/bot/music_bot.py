@@ -71,8 +71,7 @@ class MusicBot:
 
         return titles
 
-    async def play_music(self, channel, song_path, next=False):
-
+    async def play_music(self, channel, song_path=None, next=False):
         if not self.playlist:
             return
 
