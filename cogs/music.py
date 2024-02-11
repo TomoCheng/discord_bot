@@ -11,11 +11,11 @@ class Music(commands.Cog):
 
     @commands.hybrid_command(name='kiki放音樂', help='kiki會幫你放音樂')
     async def play_music(self, ctx:commands.Context, youtube_url:str):
+        await join_voice_channel(self.client, ctx.author.voice.channel)
         titles = self.music_bot.add_queue(ctx, youtube_url)
         if titles:
             for title in titles:
                 await ctx.reply(f"加入清單: {title}")
-        await join_voice_channel(self.client, ctx.author.voice.channel)
         await self.music_bot.play_music()
         
     @commands.hybrid_command(name='kiki切歌', help='kiki會幫你切歌')
