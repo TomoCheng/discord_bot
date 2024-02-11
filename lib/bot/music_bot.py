@@ -81,9 +81,9 @@ class MusicBot:
         if not self.voice_channel:
             return
 
-        voice_channel = discord.utils.get(self.dc_client.voice_clients)
+        self.voice_channel = discord.utils.get(self.dc_client.voice_clients)
 
-        if voice_channel.is_playing() and not next:
+        if self.voice_channel.is_playing() and not next:
             return
 
         video_id = list(self.playlist.keys())[0]
@@ -102,7 +102,7 @@ class MusicBot:
             )
         )
 
-        voice_channel.play(
+        self.voice_channel.play(
             self.audio(
                 executable="D:/ffmpeg/bin/ffmpeg.exe",
                 source=song_path,
@@ -115,5 +115,5 @@ class MusicBot:
         )
 
     def stop_music(self):
-        if self.voice.is_playing():
+        if self.voice_channel.is_playing():
             self.audio.cleanup()
