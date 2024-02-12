@@ -2,3 +2,4 @@
 log/
 **/__pycache__/
 lib/config.json
+/asset
