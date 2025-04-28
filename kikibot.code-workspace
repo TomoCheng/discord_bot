@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"name": "app-root",
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.cwd": "${workspaceFolder:app-root}"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "kikibot-debug",
+				"cwd": "${workspaceFolder:app-root}",
+				"type": "debugpy",
+				"request": "launch",
+				"mode": "module",
+				"module": "bot",
+				"args": [
+					"bot.py"
+				],
+				"console": "integratedTerminal",
+				"justMyCode": true
+			}
+		],
+		"compounds": [],
+	},
+}

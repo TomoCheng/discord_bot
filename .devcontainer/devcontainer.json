@@ -1,0 +1,85 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+	"name": "kikibot-devcontainer",
+	"dockerComposeFile": [
+		"compose.yaml"
+	],
+	"service": "kikibot",
+	"workspaceFolder": "/workspaces",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.largeFileOptimizations": false,
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"editor.unicodeHighlight.nonBasicASCII": true,
+				"editor.unicodeHighlight.includeStrings": false,
+				"black-formatter.importStrategy": "useBundled",
+				"editor.renderWhitespace": "all",
+				"workbench.tree.renderIndentGuides": "always",
+				"python.analysis.typeCheckingMode": "basic",
+				"[python]": {
+					"editor.formatOnType": true,
+					"editor.defaultFormatter": "ms-python.black-formatter"
+				},
+				"files.associations": {
+					"**/.env.*": "dotenv"
+				},
+				"editor.tokenColorCustomizations": {
+					"textMateRules": [
+						{
+							"scope": "keyword.other.dotenv",
+							"settings": {
+								"foreground": "#FF000000"
+							}
+						}
+					]
+				},
+				"diffEditor.maxComputationTime": 0,
+				"GitCommitPlugin.MaxSubjectCharacters": 50,
+				"black-formatter.args": [
+					"--skip-string-normalization",
+					"--line-length=79"
+				],
+				"python.linting.enabled": true,
+				"python.linting.flake8Enabled": true,
+				"python.formatting.blackArgs": [
+					"--skip-string-normalization",
+					"--line-length=79",
+					"--experimental-string-processing"
+				],
+				"editor.formatOnSave": true
+			},
+			"extensions": [
+				"ms-python.black-formatter",
+				"ms-python.gather",
+				"ms-python.isort",
+				"ms-python.pylint",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"natqe.reload",
+				"pkief.material-icon-theme",
+				"redjue.git-commit-plugin",
+				"visualstudioexptteam.intellicode-api-usage-examples",
+				"visualstudioexptteam.vscodeintellicode",
+				"visualstudioexptteam.vscodeintellicode-completions",
+				"kevinrose.vsc-python-indent",
+				"oderwat.indent-rainbow",
+				"mechatroner.rainbow-csv",
+				"RandomFractalsInc.vscode-data-preview",
+				"redhat.vscode-yaml",
+				"ms-python.black-formatter",
+				"ms-python.flake8",
+				"alefragnani.bookmarks",
+				"donjayamanne.githistory",
+				"eamodio.gitlens",
+				"gruntfuggly.todo-tree",
+				"mhutchie.git-graph",
+			]
+		}
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/dev_user/.ssh,type=bind"
+	],
+	"remoteUser": "dev_user"
+}
