@@ -17,6 +17,8 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ..:/workspaces:cached
     

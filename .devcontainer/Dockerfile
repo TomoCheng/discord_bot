@@ -1,10 +1,16 @@
 FROM python:3.12-slim
 
-RUN apt-get update && apt-get install -y sudo git \
+RUN apt-get update && apt-get install -y \
+    sudo \
+    git \
     ipmitool \
-    openssl 
+    openssl \
+    openjdk-17-jdk \
+&& rm -rf /var/lib/apt/lists/*
 
-RUN rm -rf /var/lib/apt/lists/*
+# Set JAVA_HOME PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Define user parameters
 ARG USERNAME=dev_user
@@ -23,4 +29,4 @@ USER $USERNAME
 
 WORKDIR /workspaces
 
-RUN pip install discord.py==2.5.2 python-dotenv==1.1.0 pytube==7.0.16 requests==2.32.3 youtube-search==2.1.2
+RUN pip install discord.py==2.5.2 python-dotenv==1.1.0 pytube==7.0.16 requests==2.32.3 youtube-search==2.1.2 PyNaCl==1.5.0 asyncio==3.4.3 wavelink==3.4.1

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from bot import join_voice_channel, leave_voice_channel
 
+
 class Main(commands.Cog):
 
     def __init__(self, client=discord.Client):
@@ -21,19 +22,20 @@ class Main(commands.Cog):
             print("An error occurred while syncing: ", e)
 
     @commands.hybrid_command(name='kiki', help='kiki會跟你打招呼')
-    async def kiki(self, ctx:commands.Context):
-        await ctx.reply('喵喵喵')
+    async def kiki(self, ctx: commands.Context):
+        await ctx.channel.send('喵喵喵')
 
     @commands.hybrid_command(name='kiki來', help='可以叫kiki進頻道')
-    async def kiki_come(self, ctx:commands.Context):
+    async def kiki_come(self, ctx: commands.Context):
         await join_voice_channel(self.client, ctx.author.voice.channel)
-        await ctx.reply('喵')
+        await ctx.channel.send('喵')
 
     @commands.hybrid_command(name='kiki滾', help='無情ㄉ趕走kiki')
-    async def kiki_fuck_off(self, ctx:commands.Context):
+    async def kiki_fuck_off(self, ctx: commands.Context):
         ctx.defer()
         await leave_voice_channel(self.client, ctx.author.voice.channel)
-        await ctx.reply('幹')
+        await ctx.channel.send('幹')
 
-async def setup(command_bot:commands.Bot):
-   await command_bot.add_cog(Main(command_bot))
+
+async def setup(command_bot: commands.Bot):
+    await command_bot.add_cog(Main(command_bot))
