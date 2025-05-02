@@ -40,9 +40,7 @@ class WavelinkHandler:
         if is_playlist:  ##清單
             return
 
-        tracks: wavelink.Search = await wavelink.Playable.search(
-            "https://www.youtube.com/watch?v=yGoHsTV6QrE"
-        )
+        tracks: wavelink.Search = await wavelink.Playable.search(youtube_url)
         ##print("searching:", youtube_url)
         ##results = await wavelink.Playable.search(youtube_url)
         print("results:", tracks)
