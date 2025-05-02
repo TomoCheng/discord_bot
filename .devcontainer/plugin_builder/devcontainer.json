@@ -10,7 +10,7 @@
 		"plugin_builder"
 	],
 	"workspaceFolder": "/workspaces",
-	"postCreateCommand": "cp /builds/plugin/build/libs/youtube-source-*.jar ./lavalink/plugins/hung-plugin.jar",
+	"postCreateCommand": "cp /builds/youtube-source/plugin/build/libs/youtube-plugin-*.jar ./lavalink/plugins/hung-plugin.jar ",
 	"mounts": [
 		"source=${localEnv:HOME}/.ssh,target=/home/dev_user/.ssh,type=bind"
 	],

@@ -51,5 +51,5 @@ class WavelinkHandler:
             return await ctx.channel.send("❌ 找不到音樂！")
 
         track = tracks[0]
-        await player.play(track, volume=500)
+        await player.play(track, volume=50)
         await ctx.channel.send(f"🎶 現在播放：{track.title}")

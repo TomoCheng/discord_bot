@@ -24,3 +24,6 @@ plugins:
       - MUSIC
       - WEB
       - MWEB
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
