@@ -9,6 +9,8 @@ x-logging: &default-logging
 x-service-defaults: &service-defaults
   restart: always
   logging: *default-logging
+  networks:
+    - hung-magic
   
 services:
   kikibot:
@@ -21,4 +23,36 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ..:/workspaces:cached
-    
+    depends_on:
+      - lavalink
+
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: lavalink
+    ports:
+      - "2333:2333"
+    environment:
+      - SERVER_PORT=2333
+      - LAVALINK_SERVER_PASSWORD=youshallnotpass
+      - LAVALINK_SERVER_SOURCES_YOUTUBE=false
+      - LAVALINK_SERVER_SOURCES_BANDCAMP=true
+      - LAVALINK_SERVER_SOURCES_SOUNDCLOUD=true
+      - LAVALINK_SERVER_SOURCES_HTTP=true
+      - LAVALINK_SERVER_SOURCES_LOCAL=false
+    volumes:
+      - ../lavalink/application.yml:/opt/Lavalink/application.yml
+      - ../lavalink/plugins:/opt/Lavalink/plugins
+    restart: unless-stopped
+  
+  plugin_builder:
+    <<: *service-defaults
+    build:
+      context: ..
+      dockerfile: .devcontainer/plugin_builder/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces:cached
+
+networks:
+  hung-magic:
+    driver: bridge

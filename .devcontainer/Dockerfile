@@ -3,14 +3,10 @@ FROM python:3.12-slim
 RUN apt-get update && apt-get install -y \
     sudo \
     git \
-    ipmitool \
+    curl \
     openssl \
-    openjdk-17-jdk \
+    nano \
 && rm -rf /var/lib/apt/lists/*
-
-# Set JAVA_HOME PATH
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Define user parameters
 ARG USERNAME=dev_user
