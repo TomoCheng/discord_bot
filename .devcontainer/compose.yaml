@@ -19,14 +19,13 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ..:/workspaces:cached
     depends_on:
       - lavalink
 
   lavalink:
+    <<: *service-defaults
     image: ghcr.io/lavalink-devs/lavalink:4
     container_name: lavalink
     ports:
@@ -34,11 +33,6 @@ services:
     environment:
       - SERVER_PORT=2333
       - LAVALINK_SERVER_PASSWORD=youshallnotpass
-      - LAVALINK_SERVER_SOURCES_YOUTUBE=false
-      - LAVALINK_SERVER_SOURCES_BANDCAMP=true
-      - LAVALINK_SERVER_SOURCES_SOUNDCLOUD=true
-      - LAVALINK_SERVER_SOURCES_HTTP=true
-      - LAVALINK_SERVER_SOURCES_LOCAL=false
     volumes:
       - ../lavalink/application.yml:/opt/Lavalink/application.yml
       - ../lavalink/plugins:/opt/Lavalink/plugins

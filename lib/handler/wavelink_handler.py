@@ -16,7 +16,7 @@ class WavelinkHandler:
 
     async def connect(self):
         node = wavelink.Node(
-            uri="http://host.docker.internal:2333",
+            uri="http://lavalink:2333",
             password="youshallnotpass",
         )
         await self.pool.connect(client=self.client, nodes=[node])
