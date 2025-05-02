@@ -6,6 +6,10 @@
 		"compose.yaml"
 	],
 	"service": "kikibot",
+	"runServices": [
+		"kikibot",
+		"lavalink"
+	],
 	"workspaceFolder": "/workspaces",
 	"customizations": {
 		"vscode": {
