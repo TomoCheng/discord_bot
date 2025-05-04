@@ -1,0 +1,52 @@
+version: '3.8'
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-service-defaults: &service-defaults
+  restart: always
+  logging: *default-logging
+  networks:
+    - hung-magic
+  
+services:
+  kikibot:
+    <<: *service-defaults
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces:cached
+    depends_on:
+      - lavalink
+
+  lavalink:
+    <<: *service-defaults
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: lavalink
+    ports:
+      - "2333:2333"
+    environment:
+      - SERVER_PORT=2333
+      - LAVALINK_SERVER_PASSWORD=youshallnotpass
+    volumes:
+      - ../lavalink/application.yml:/opt/Lavalink/application.yml
+      - ../lavalink/plugins:/opt/Lavalink/plugins
+    restart: unless-stopped
+  
+  plugin_builder:
+    <<: *service-defaults
+    build:
+      context: ..
+      dockerfile: .devcontainer/plugin_builder/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces:cached
+
+networks:
+  hung-magic:
+    driver: bridge
