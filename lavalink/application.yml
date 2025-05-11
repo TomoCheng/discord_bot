@@ -21,9 +21,6 @@ plugins:
     # The clients to use for track loading. See below for a list of valid clients.
     # Clients are queried in the order they are given (so the first client is queried first and so on...)
     clients:
-      - MUSIC
-      - WEB
       - MWEB
-      - ANDROID_VR
-      - WEB
       - WEBEMBEDDED
+      - MUSIC
